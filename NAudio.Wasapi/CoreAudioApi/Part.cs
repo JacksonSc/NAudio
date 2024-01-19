@@ -15,6 +15,7 @@ namespace NAudio.CoreAudioApi
         private DeviceTopology deviceTopology;
         private static Guid IID_IAudioVolumeLevel = new Guid("7FB7B48F-531D-44A2-BCB3-5AD5A134B3DC");
         private static Guid IID_IAudioMute = new Guid("DF45AEEA-B74A-4B6B-AFAD-2366B6AA012E");
+        private static Guid IID_IAudioAutoGainControl = new Guid("85401FD4-6DE4-4b9d-9869-2D6753A82F3C");
         private static Guid IID_IAudioEndpointVolume = new Guid("5CDF2C82-841E-4546-9722-0CF74078229A");
         private static Guid IID_IKsJackDescription = new Guid("4509F757-2D46-4637-8E62-CE7DB944F57B");
 
@@ -165,6 +166,15 @@ namespace NAudio.CoreAudioApi
             {
                 var hr = partInterface.Activate(ClsCtx.ALL, ref IID_IAudioMute, out var result);
                 return hr == 0 ? new AudioMute(result as IAudioMute) : null;
+            }
+        }
+
+        public AudioAutoGainControl AudioAutoGainControl
+        {
+            get
+            {
+                var hr = partInterface.Activate(ClsCtx.ALL, ref IID_IAudioAutoGainControl, out var result);
+                return hr == 0 ? new AudioAutoGainControl(result as IAudioAutoGainControl) : null;
             }
         }
 

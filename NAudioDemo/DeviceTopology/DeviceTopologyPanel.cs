@@ -103,6 +103,7 @@ namespace NAudioDemo.DeviceTopology
         {
             var audioVolumeLevel = part.AudioVolumeLevel;
             var audioMute = part.AudioMute;
+            var audioAutoGainControl = part.AudioAutoGainControl;
             var jackDescription = part.JackDescription;
 
             var s = "\r\n";
@@ -116,10 +117,17 @@ namespace NAudioDemo.DeviceTopology
                     s += $"{indent}Channel: {i}, Min {minLevelDb:0.##} dB, Max {maxLevelDb:0.##} dB, stepping {stepping:0.##} dB: {volume:0.##} dB\r\n";
                 }
             }
-            else if (audioMute != null)
+            if (audioAutoGainControl != null)
+            {
+                s = $" (audio gain control level={audioAutoGainControl.AGCEnabled})\r\n";
+                audioAutoGainControl.AGCEnabled = false;
+                s += $"Auto gain control set to false";
+            }
+            if (audioMute != null)
             {
                 s = $" (audio mute. Muted: {audioMute.IsMuted})\r\n";
-            } if (jackDescription != null)
+            } 
+            if (jackDescription != null)
             {
                 s = $" (Jacks: {jackDescription.Count})\r\n";
             }
